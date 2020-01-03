@@ -1,0 +1,8 @@
+*.asv
+*.m~
+*.autosave
+*.lo
+opf_output/
+opf_data.glm
+uot_output/
+uot_data.glm

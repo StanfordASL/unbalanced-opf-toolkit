@@ -1,0 +1,131 @@
+// Large PV at end of the feeder
+
+//*********************************************
+// Include the modules
+//*********************************************
+
+module climate;
+module generators;
+
+//*********************************************
+// Climate
+//*********************************************
+
+object csv_reader {
+	name my_csv_reader;
+	//filename solar-diff-no-flicker.csv;
+	filename solar-diff-flicker.csv;
+}
+
+object climate {
+	//tmyfile solar-diff-no-flicker.csv;
+	tmyfile solar-diff-flicker.csv;
+	reader my_csv_reader;
+}
+
+
+//*********************************************
+// Transformer config Objects
+//*********************************************
+
+object transformer_configuration {
+	name Xfrm_config_PV_1700093599;
+	connect_type SINGLE_PHASE_CENTER_TAPPED;
+	install_type POLETOP;
+	power_rating 500000;
+	primary_voltage 7274.613;
+	secondary_voltage 120;
+	resistance 0.09;
+	reactance 1.81;
+}
+
+
+//*********************************************
+// Transformer Objects
+//*********************************************
+
+object transformer {
+	name Xfrm_1700093599_A;
+	phases AS;
+	from N_1700093599;
+	to N_1700093599_sec_A;
+	configuration Xfrm_config_PV_1700093599;
+}
+
+object transformer {
+	name Xfrm_1700093599_B;
+	phases BS;
+	from N_1700093599;
+	to N_1700093599_sec_B;
+	configuration Xfrm_config_PV_1700093599;
+}
+
+
+//*********************************************
+// Triplex meter Objects
+//*********************************************
+
+object triplex_meter {
+	name N_1700093599_sec_A;
+	phases AS;
+	nominal_voltage 120;
+}
+
+object triplex_meter {
+	name N_1700093599_sec_B;
+	phases BS;
+	nominal_voltage 120;
+}
+
+//*********************************************
+// Inverter Objects
+//*********************************************
+
+object inverter {
+	name inverter_N_1700093599_A;
+	parent N_1700093599_sec_A;
+	phases AS;
+	generator_mode CONSTANT_PF;
+	generator_status ONLINE;
+	inverter_type PWM;
+	power_factor 1.000000;
+	rated_power 100000.0;
+	inverter_efficiency 0.9;
+}
+
+object inverter {
+	name inverter_N_1700093599_B;
+	parent N_1700093599_sec_B;
+	phases BS;
+	generator_mode CONSTANT_PF;
+	generator_status ONLINE;
+	inverter_type PWM;
+	power_factor 1.000000;
+	rated_power 100000.0;
+	inverter_efficiency 0.9;
+}
+
+
+//*********************************************
+// Solar Objects
+//*********************************************
+
+object solar {
+	name solar_N_1700093599_A;
+	parent inverter_N_1700093599_A;
+	generator_mode SUPPLY_DRIVEN;
+	generator_status ONLINE;
+	panel_type SINGLE_CRYSTAL_SILICON;
+	efficiency 0.2;
+	area 300000;
+}
+
+object solar {
+	name solar_N_1700093599_B;
+	parent inverter_N_1700093599_B;
+	generator_mode SUPPLY_DRIVEN;
+	generator_status ONLINE;
+	panel_type SINGLE_CRYSTAL_SILICON;
+	efficiency 0.2;
+	area 300000;
+}

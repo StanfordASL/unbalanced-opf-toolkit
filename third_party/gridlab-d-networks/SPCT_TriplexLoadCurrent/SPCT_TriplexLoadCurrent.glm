@@ -1,0 +1,181 @@
+// This is a minimal example of a network with split-phase 
+// nodes. It is intended as a test for solving power flow.
+
+clock {
+	timezone EST+5EDT;
+	starttime '2000-01-01 0:00:00';
+	stoptime '2000-01-01 0:00:01';
+}
+
+module powerflow {
+	solver_method NR;
+	line_capacitance true;
+	default_resistance 5e-3;
+	}
+
+
+#include "uot_data.glm";
+
+
+object node { //650 {
+      name n650;
+      phases "ABCN";
+      bustype SWING;
+      voltage_A 2401.7771;
+      voltage_B -1200.8886-2080.000j;
+      voltage_C -1200.8886+2080.000j;
+      nominal_voltage 2401.7771;
+}
+
+object line_spacing {
+	name ls500601;
+	distance_AB 2.5;
+	distance_AC 4.5;
+	distance_BC 7.0;
+	distance_BN 5.656854;
+	distance_AN 4.272002;
+	distance_CN 5.0;
+	distance_AE 28.0;
+	distance_BE 28.0;
+	distance_CE 28.0;
+	distance_NE 24.0;
+}
+
+object overhead_line_conductor {
+	name olc6010;
+	geometric_mean_radius 0.031300;
+	diameter 0.927 in;
+	resistance 0.185900;
+}
+
+object overhead_line_conductor {
+	name olc6020;
+	geometric_mean_radius 0.00814;
+	diameter 0.56 in;
+	resistance 0.592000;
+}
+
+object line_configuration {
+	name lc601;
+	conductor_A olc6010;
+	conductor_B olc6010;
+	conductor_C olc6010;
+	conductor_N olc6020;
+	spacing ls500601;
+}
+
+object overhead_line { //630632 {
+     phases "ABCN";
+     name line_630-632;
+     from n650;
+     to n632;
+     length 2000;
+     configuration lc601;
+}
+
+object node { //632 {
+     name n632;
+     phases "ABCN";
+     voltage_A 2401.7771;
+     voltage_B -1200.8886-2080.000j;
+     voltage_C -1200.8886+2080.000j;
+     nominal_voltage 2401.7771;
+	}
+
+// // Triplex stuff
+object triplex_line_conductor: {
+     name triplex_4/0 AA;
+     resistance 0.48;
+     geometric_mean_radius 0.0158;
+}
+
+object triplex_line_configuration:1 {
+     conductor_1 triplex_4/0 AA;
+     conductor_2 triplex_4/0 AA;
+     conductor_N triplex_4/0 AA;
+     insulation_thickness 0.08;
+     diameter 0.522;
+}
+
+
+object transformer_configuration {
+		 name trafo_config_spct;
+     connect_type SINGLE_PHASE_CENTER_TAPPED;
+     install_type PADMOUNT;
+     primary_voltage 2401.7771 V;
+     secondary_voltage 120 V;
+     power_rating 10.0;
+     powerA_rating 10.0;
+     resistance 0.015;
+     reactance 0.01;
+     shunt_impedance 308.320+282.847j;
+}
+
+object transformer:516 {
+     name R1-12-47-4_xfmr_1;
+     phases AS;
+     from n632;
+     to n632_tn_1;
+     configuration trafo_config_spct;
+}
+
+object triplex_line {
+     name n632_tline;
+     phases AS;
+     from n632_tn_1;
+     to n632_tn_2;
+     length 30;
+     configuration triplex_line_configuration:1;
+}
+
+object triplex_line {
+     name n632_tline_2;
+     phases AS;
+     from n632_tn_2;
+     to n632_tn_3;
+     length 30;
+     configuration triplex_line_configuration:1;
+}
+
+
+object triplex_load {
+     name  n632_tn_1;
+     phases AS;
+     voltage_1 120;
+     voltage_2 120;
+     voltage_N 0;
+     nominal_voltage 120;
+		 constant_power_12 17447.9567+11281.2713j;
+}
+
+object triplex_load {
+     name n632_tn_2;
+     phases AS;
+	 constant_current_1 10.0+10.0j;
+     constant_current_2 10.0+10.0j;
+     voltage_1 120;
+     voltage_2 120;
+     voltage_N 0;
+     nominal_voltage 120;
+}
+
+object triplex_load {
+     name n632_tn_3;
+     phases AS;
+     constant_current_12 10.0+10.0j;
+     voltage_1 120;
+     voltage_2 120;
+     voltage_N 0;
+     nominal_voltage 120;
+}
+
+
+// object triplex_load {
+//      name  n632_tn_1;
+//      phases AS;
+//      voltage_1 120;
+//      voltage_2 120;
+//      voltage_N 0;
+//      nominal_voltage 120;
+// 		  constant_power_12 17447.9567+11281.2713j;
+// }

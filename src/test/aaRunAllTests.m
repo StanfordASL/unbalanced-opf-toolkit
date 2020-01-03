@@ -1,0 +1,1 @@
+runtests(pwd,'IncludeSubfolders',true)

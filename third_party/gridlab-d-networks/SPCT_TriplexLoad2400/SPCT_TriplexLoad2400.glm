@@ -1,0 +1,226 @@
+// This is a minimal example of several SPCT transformers connected to a single node.
+// It is similar to SPCT_TriplexLoad120 but here the nominal voltage of the triplex nodes is 
+// set to 2400V which is an uncommon voltage and a common error in several models.
+
+
+clock {
+	timezone EST+5EDT;
+	starttime '2000-01-01 0:00:00';
+	stoptime '2000-01-01 0:00:01';
+}
+
+module powerflow {
+	solver_method NR;
+	line_capacitance true;
+	default_resistance 5e-3;
+	}
+
+
+#include "uot_data.glm"
+
+
+object node { //650 {
+      name n650;
+      phases "ABCN";
+      bustype SWING;
+      voltage_A 2401.7771;
+      voltage_B -1200.8886-2080.000j;
+      voltage_C -1200.8886+2080.000j;
+      nominal_voltage 2401.7771;
+}
+
+object line_spacing {
+	name ls500601;
+	distance_AB 2.5;
+	distance_AC 4.5;
+	distance_BC 7.0;
+	distance_BN 5.656854;
+	distance_AN 4.272002;
+	distance_CN 5.0;
+	distance_AE 28.0;
+	distance_BE 28.0;
+	distance_CE 28.0;
+	distance_NE 24.0;
+}
+
+object overhead_line_conductor {
+	name olc6010;
+	geometric_mean_radius 0.031300;
+	diameter 0.927 in;
+	resistance 0.185900;
+}
+
+object overhead_line_conductor {
+	name olc6020;
+	geometric_mean_radius 0.00814;
+	diameter 0.56 in;
+	resistance 0.592000;
+}
+
+object line_configuration {
+	name lc601;
+	conductor_A olc6010;
+	conductor_B olc6010;
+	conductor_C olc6010;
+	conductor_N olc6020;
+	spacing ls500601;
+}
+
+object node {
+     name n632;
+     phases "ABCN";
+     voltage_A 2401.7771;
+     voltage_B -1200.8886-2080.000j;
+     voltage_C -1200.8886+2080.000j;
+     nominal_voltage 2401.7771;
+}
+
+object node {
+	name n633;
+	phases "ABCN";
+	voltage_A 2401.7771;
+	voltage_B -1200.8886-2080.000j;
+	voltage_C -1200.8886+2080.000j;
+	nominal_voltage 2401.7771;
+}
+
+object overhead_line { 
+     phases "ABCN";
+     name line_650-633;
+     from n650;
+     to n633;
+     length 2000;
+     configuration lc601;
+}
+
+object overhead_line {
+     phases "ABCN";
+     name line_650-632;
+     from n650;
+     to n632;
+     length 2000;
+     configuration lc601;
+}
+
+
+
+// // Triplex stuff
+
+object transformer_configuration {
+	name trafo_config_spct;
+	connect_type SINGLE_PHASE_CENTER_TAPPED;
+	primary_voltage 2401.7771 V;
+	secondary_voltage 120 V;
+	power_rating 833.333 kVA;
+	impedance 0.002875+0.054625j;
+}
+
+// 3 SPCT connected to n632, one to each phase
+object transformer {
+     name R1-12-47-4_xfmr_1A;
+     phases AS;
+     from n632;
+     to n632_tn_1A;
+     configuration trafo_config_spct;
+}
+
+object transformer {
+     name R1-12-47-4_xfmr_1B;
+     phases BS;
+     from n632;
+     to n632_tn_1B;
+     configuration trafo_config_spct;
+}
+
+object transformer {
+     name R1-12-47-4_xfmr_1C;
+     phases CS;
+     from n632;
+     to n632_tn_1C;
+     configuration trafo_config_spct;
+}
+
+
+object triplex_load {
+	name n632_tn_1A;
+	groupid primary;
+	phases AS;
+	nominal_voltage 2400;
+	constant_power_12 1744.9567+1128.2713j;
+}
+
+object triplex_load {
+	name n632_tn_1B;
+	groupid primary;
+	phases BS;
+	nominal_voltage 2400;
+	constant_power_12 1744.9567+1128.2713j;
+}
+
+object triplex_load {
+	name n632_tn_1C;
+	groupid primary;
+	phases CS;
+	nominal_voltage 2400;
+	constant_power_12 1744.9567+1128.2713j;
+}
+
+
+object triplex_line_conductor: {
+     name triplex_4/0 AA;
+     resistance 0.48;
+     geometric_mean_radius 0.0158;
+}
+
+object triplex_line_configuration:1 {
+     conductor_1 triplex_4/0 AA;
+     conductor_2 triplex_4/0 AA;
+     conductor_N triplex_4/0 AA;
+     insulation_thickness 0.08;
+     diameter 0.522;
+}
+//
+// object triplex_line {
+//      name n632_tline_A;
+//      phases AS;
+//      from n632_tn_1A;
+//      to n632_tn_2A;
+//      length 30;
+//      configuration triplex_line_configuration:1;
+// }
+//
+// object triplex_line {
+//      name n632_tline_B;
+//      phases BS;
+//      from n632_tn_1B;
+//      to n632_tn_2B;
+//      length 30;
+//      configuration triplex_line_configuration:1;
+// }
+//
+// object triplex_line {
+//      name n632_tline_C;
+//      phases CS;
+//      from n632_tn_1C;
+//      to n632_tn_2C;
+//      length 30;
+//      configuration triplex_line_configuration:1;
+// }
+//
+// object triplex_load {
+//      name n632_tn_2A;
+//      phases AS;
+//      nominal_voltage 120;
+// }
+//
+// object triplex_load {
+//      name n632_tn_2B;
+//      phases BS;
+//      nominal_voltage 120;
+// }
+//
+// object triplex_load {
+//      name n632_tn_2C;
+//      phases CS;
+//      nominal_voltage 120;
+// }
