@@ -1,10 +1,10 @@
 # Unbalanced OPF Toolkit (UOT)
-A general code base to formulate and solve unbalanced optimal power flow (OPF) problems written in *MATLAB*. 
+The Unbalanced OPF Toolkit (UOT) is a general code base to formulate and solve unbalanced optimal power flow (OPF) problems written in *MATLAB*. 
 UOT formulates the optimization problems using [YALMIP](https://yalmip.github.io) allowing to use a multitude of solvers. 
 UOT supports [GridLAB-D](https://www.gridlabd.org/) models of the power distribution network.
 
 ## Documentation
-The project's documentation is hosted in [Read the Docs](https://readthedocs.org/).
+The project's documentation is hosted in [Read the Docs](https://unbalanced-opf-toolkit.readthedocs.io/).
 
 ## Contributing
 The development of UOT is based on Github Issues. Please create a new Issue to report a bug or request a new feature.
