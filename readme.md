@@ -11,7 +11,7 @@ The development of UOT is based on Github Issues. Please create a new Issue to r
 
 We use the [feature branch workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow) where Issue #xx is associated to branch issues/xx-brief_issue_description. 
 If you want to work on an issue, please do so on the corresponding branch. 
-At the end, please create a pull request so that one of the core developers can review your code and fix any approve merging to master.
+At the end, please create a pull request so that one of the core developers can review your code and approve merging to master.
 
 ## Authors
 * **Alvaro Estandia** - Main developer of UOT.
