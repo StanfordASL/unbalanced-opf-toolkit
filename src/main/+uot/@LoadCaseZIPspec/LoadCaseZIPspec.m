@@ -28,7 +28,7 @@ classdef LoadCaseZIPspec < uot.AbstractLoadCaseSpec
         % When working with pre-rotated currents, they are injected directly to the bus
         % i_inj_a = i_y_a
         % When working with non pre-rotated currents, they are first rotated to account
-        % for the angles of the different phases as in Bazrafshan2016 Eq. 3b
+        % for the angles of the different phases as in Bazrafshan2018a Eq. 3b
         % i_inj_a = i_y_a*(v_bus./(abs(v_bus)))
         % i_d_a works analogously
         % Note that derived loads i_y_va and i_d_va are always non-prerotated.

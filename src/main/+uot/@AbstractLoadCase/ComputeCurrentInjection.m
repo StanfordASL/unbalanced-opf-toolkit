@@ -1,4 +1,4 @@
-% Based on Bazrafshan2016
+% Based on Bazrafshan2018a
 function I_inj_array = ComputeCurrentInjection(obj,U_array,T_array)
 V_array = uot.PolarToComplex(U_array,T_array);
 

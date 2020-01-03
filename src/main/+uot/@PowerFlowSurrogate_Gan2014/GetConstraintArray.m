@@ -102,7 +102,7 @@ for i_time_step = 1:n_time_step
        S_link = obj.decision_variables.S_link_cell{i_link,i_time_step};
        L_link = obj.decision_variables.L_link_cell{i_link,i_time_step};
 
-       % Note that according to Bazrafshan2017 Theorem 1, Y_from = Y_to.'.
+       % Note that according to Bazrafshan2018b Theorem 1, Y_from = Y_to.'.
        % So no need to worry about Z_from vs Z_to.
 
        Z_link_pre = network.link_data_array(i_link).Z_from;

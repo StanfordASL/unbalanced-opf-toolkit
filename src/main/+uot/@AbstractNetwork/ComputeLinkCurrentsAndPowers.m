@@ -7,7 +7,7 @@ function [I_link_from_array,I_link_to_array,S_link_from_array,S_link_to_array] =
 %
 % Description:
 %   This method computes the current flowing through the network's links according
-%   to Eq. 4 in :cite:`Bazrafshan2017`. The power flows are then computed from these
+%   to Eq. 4 in :cite:`Bazrafshan2018b`. The power flows are then computed from these
 %   currents.
 %
 % Arguments:
@@ -39,7 +39,7 @@ for i_link = 1:obj.n_link
     link_phase_from = obj.link_has_phase_from(i_link,:);
     link_phase_to = obj.link_has_phase_to(i_link,:);
 
-    % Based on Bazrafshan2017, Eqs. (4a) and (4b)
+    % Based on Bazrafshan2018b, Eqs. (4a) and (4b)
     Y_from = obj.link_data_array(i_link).Y_from;
     Y_to = obj.link_data_array(i_link).Y_to;
     Y_shunt_from = obj.link_data_array(i_link).Y_shunt_from;

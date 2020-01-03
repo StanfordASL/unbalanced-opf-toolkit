@@ -6,7 +6,7 @@ function [U_array,T_array, p_pcc_array, q_pcc_array] = SolvePowerFlow(obj,u_pcc_
 %   [U_array,T_array, p_pcc_array, q_pcc_array] = load_case.SolvePowerFlow(u_pcc_array,t_pcc_array)
 %
 % Description:
-%   This function uses the Zbus iterative method :cite:`Bazrafshan2016` to solve 
+%   This function uses the Zbus iterative method :cite:`Bazrafshan2018a` to solve 
 %   the power flow problem.
 %   
 %

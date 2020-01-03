@@ -8,7 +8,7 @@ I_i_y_pre_stack = uot.StackPhaseConsistent(I_i_y_pre,obj.bus_has_load_phase);
 
 % If the currents are already prerotated (e.g., because they came from
 % Gridlab), there is no need to multiply them by V./abs(V) as done in
-% Bazrafshan2016.
+% Bazrafshan2018a.
 if obj.spec.current_is_prerotated
     I_i_y_stack = I_i_y_pre_stack;
 else

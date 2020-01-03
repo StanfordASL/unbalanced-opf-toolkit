@@ -34,7 +34,7 @@ for i_link = 1:network.n_link
     from_i = link_data.from_i;
     to_i = link_data.to_i;
 
-    % According to Bazrafshan2017, Table IV
+    % According to Bazrafshan2018b, Table IV
     % For power links, this is equal to 1/2 the link's shunt admittance
     % For wye-wye transformers it is zero
     Y_shunt_bus_from_link = link_data.Y_shunt_from - link_data.Y_from;
